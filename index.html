@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhoneScript — Callaghan College Wallsend Campus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Font: Sofia Pro (not on Google Fonts) → Montserrat → Arial -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="CC-Wallsend-LogoReverseOnBlue - Copy.png" alt="Callaghan College Wallsend Campus" class="logo-img" />
+  </div>
+  <div class="header-text">
+    <div class="header-brand">Callaghan College · Wallsend Campus</div>
+    <h1>PhoneScript</h1>
+    <p>Smart parent call script generator</p>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ── Call type toggle ── -->
+  <div class="type-toggle" role="group" aria-label="Call type">
+    <button class="type-btn active-pos" id="btn-pos" onclick="setMode('positive')">
+      <span class="icon">😊</span> Positive Call
+    </button>
+    <button class="type-btn" id="btn-neg" onclick="setMode('negative')">
+      <span class="icon">⚠️</span> Concern / Follow-up Call
+    </button>
+  </div>
+
+  <!-- ── Privacy notice ── -->
+  <div class="privacy-notice" role="note" aria-label="Privacy information">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span><strong>100% browser-based — no data leaves your device.</strong> Everything you type stays on your computer. No internet connection is needed after the page loads, and nothing is transmitted to any server.</span>
+  </div>
+
+  <!-- ── Call details ── -->
+  <div class="card">
+    <h2>📋 Call Details</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="teacherName">Teacher Name</label>
+        <input type="text" id="teacherName" placeholder="e.g. Ms Smith" />
+      </div>
+      <div class="field">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" placeholder="e.g. Alex" />
+      </div>
+      <div class="field">
+        <label for="subject">Subject / Class</label>
+        <input type="text" id="subject" placeholder="e.g. Year 9 Mathematics" />
+      </div>
+      <div class="field">
+        <label for="parentName">Parent / Carer Name</label>
+        <input type="text" id="parentName" placeholder="e.g. Mrs Johnson" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Points to cover ── -->
+  <div class="card">
+    <h2 id="pointsTitle">✅ Points to Cover</h2>
+    <div class="section-label" id="pointsHint">
+      Add the key positives you want to share — the script engine will weave them into a warm, encouraging call.
+    </div>
+
+    <ul class="points-list" id="pointsList"></ul>
+
+    <div class="add-point-row">
+      <input type="text" id="pointInput" placeholder="Type a point and press Enter or click Add…" />
+      <button class="btn btn-primary" onclick="addPoint()">+ Add</button>
+    </div>
+
+    <div id="quickPos" style="margin-top:.9rem;">
+      <div class="section-label">Quick suggestions</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem;" id="quickPosChips"></div>
+    </div>
+
+    <div id="quickNeg" style="display:none;margin-top:.9rem;">
+      <div class="section-label">Quick suggestions</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem;" id="quickNegChips"></div>
+    </div>
+
+    <div class="generate-bar">
+      <button class="btn btn-pos" id="generateBtn" onclick="generateScript()">
+        ✨ Generate Script
+      </button>
+      <span class="smart-badge">✨ Smart</span>
+      <span id="aiStatus" style="font-size:.8rem;color:var(--neutral);"></span>
+    </div>
+  </div>
+
+  <!-- ── Generated script ── -->
+  <div class="card" id="scriptCard" style="display:none;">
+    <h2>📄 Your Script</h2>
+    <div class="script-meta" id="scriptMeta"></div>
+    <div class="script-output" id="scriptOutput"></div>
+    <div class="script-actions">
+      <button class="btn btn-outline" onclick="copyScript()">📋 Copy to Clipboard</button>
+      <button class="btn btn-outline" onclick="printScript()">🖨️ Print</button>
+      <button class="btn btn-outline" onclick="regenerate()">🔄 Regenerate</button>
+    </div>
+  </div>
+
+  <!-- ── Parent response suggestions ── -->
+  <div class="card" id="responsesCard" style="display:none;">
+    <h2>💬 Suggested Responses to Parent Questions</h2>
+    <p style="font-size:.85rem;color:var(--txt2);margin-bottom:1rem;">
+      Expand each scenario for a suggested response you can adapt in the moment.
+    </p>
+    <div class="responses-grid" id="responsesGrid"></div>
+  </div>
+
+</div><!-- /.app -->
+
+<footer class="app-footer">
+  <strong>Callaghan College · Wallsend Campus</strong> &nbsp;·&nbsp; PhoneScript &nbsp;·&nbsp; For staff use only
+</footer>
+
+<div id="toast"></div>
+
+<!-- Load phrase library first, then engine, then UI -->
+<script src="phrases.js"></script>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
