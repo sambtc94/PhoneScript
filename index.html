@@ -106,7 +106,20 @@
       <button class="btn btn-outline" onclick="copyScript()">📋 Copy to Clipboard</button>
       <button class="btn btn-outline" onclick="printScript()">🖨️ Print</button>
       <button class="btn btn-outline" onclick="regenerate()">🔄 Regenerate</button>
+      <button class="btn btn-outline" onclick="openEduChat()">🤖 Use EduChat to clean</button>
+      <a class="btn btn-outline"
+         href="https://callaghancollegewallsend.sentral.com.au/s-D4aM40/dashboard/"
+         target="_blank" rel="noopener noreferrer">🗂️ Log in Sentral</a>
     </div>
+    <p class="action-caution">
+      🤖 <strong>Use EduChat to clean:</strong> this copies a ready-made prompt and opens NSWEduChat
+      in a new tab — <strong>paste it into the EduChat message box (Ctrl+V) and press Enter</strong>.
+      It will return a polished script plus suggested replies if the parent questions you.
+      <br>
+      ⚠️ PhoneScript itself runs entirely in your browser, but this prompt includes the student and
+      parent names. Only use the department-sanctioned tool and follow your school's
+      information-handling policy.
+    </p>
   </div>
 
   <!-- ── Parent response suggestions ── -->
@@ -116,6 +129,26 @@
       Expand each scenario for a suggested response you can adapt in the moment.
     </p>
     <div class="responses-grid" id="responsesGrid"></div>
+  </div>
+
+  <!-- ── Sentral reminder ── -->
+  <div class="card reminder-card" id="sentralCard">
+    <h2>🗂️ Don't Forget — Log This Call in Sentral</h2>
+    <p style="font-size:.88rem;color:var(--txt2);margin-bottom:.85rem;">
+      All contact with parents and carers must be recorded as <strong>Correspondence</strong> in
+      Sentral, whether the call was positive or a concern.
+    </p>
+    <ul class="reminder-list">
+      <li>Date and time of the call</li>
+      <li>Who you actually spoke to (and whether you left a message)</li>
+      <li>A brief factual summary of what was discussed</li>
+      <li>Any agreed next steps and a follow-up date</li>
+    </ul>
+    <a class="btn btn-primary"
+       href="https://callaghancollegewallsend.sentral.com.au/s-D4aM40/dashboard/"
+       target="_blank" rel="noopener noreferrer">
+      Callaghan College Wallsend Campus — Dashboard ↗
+    </a>
   </div>
 
 </div><!-- /.app -->

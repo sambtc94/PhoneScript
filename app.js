@@ -188,6 +188,62 @@ function copyScript() {
   navigator.clipboard.writeText(text).then(() => showToast('✅ Copied to clipboard!'));
 }
 
+/* ── EduChat hand-off ───────────────────────────────────────── */
+const EDUCHAT_URL = 'https://chat.education.nsw.gov.au/ft/#/chat';
+
+function buildEduChatPrompt() {
+  const d      = getDetails();
+  const script = document.getElementById('scriptOutput').textContent;
+  const type   = mode === 'positive'
+    ? 'a positive / good-news call'
+    : 'a concern / follow-up call';
+
+  return [
+    `You are helping a teacher at a NSW public high school prepare for ${type} home to a parent/carer.`,
+    '',
+    'CONTEXT',
+    `- Teacher: ${d.teacher}`,
+    `- Student: ${d.student}`,
+    `- Parent/Carer: ${d.parent}`,
+    `- Class/Subject: ${d.subject}`,
+    `- Call type: ${mode === 'positive' ? 'Positive' : 'Concern / follow-up'}`,
+    '',
+    'KEY POINTS THE TEACHER WANTS TO COVER',
+    ...points.map(p => `- ${p}`),
+    '',
+    'DRAFT SCRIPT',
+    '---',
+    script,
+    '---',
+    '',
+    'TASK 1 — Refine the script',
+    'Rewrite the draft above so it sounds like natural spoken Australian English, warm but',
+    'professional, and appropriate for a NSW Department of Education staff member. Keep every',
+    'factual point from the draft, do not invent any new facts, incidents, marks or promises,',
+    'avoid education jargon, keep any [Pause and listen] cues, and keep the length similar.',
+    '',
+    'TASK 2 — Likely parent questions and suggested replies',
+    'List 6–8 questions, objections or pushbacks this parent/carer is realistically likely to raise,',
+    'including difficult ones. For each, give a short suggested reply the teacher could say. Replies',
+    'must be de-escalating and non-defensive, stick to what the teacher personally observed, and',
+    'must not promise anything beyond a classroom teacher\'s authority (refer on to the Head Teacher,',
+    'Year Adviser or Deputy Principal where appropriate).',
+    '',
+    'OUTPUT FORMAT',
+    'Return exactly two headed sections: "Refined Script" and "If You Get Questioned".',
+  ].join('\n');
+}
+
+function openEduChat() {
+  const prompt = buildEduChatPrompt();
+  navigator.clipboard.writeText(prompt)
+    .then(() => {
+      showToast('✅ Prompt copied — paste it into NSWEduChat with Ctrl+V');
+      window.open(EDUCHAT_URL, '_blank', 'noopener');
+    })
+    .catch(() => showToast('⚠️ Couldn\'t copy automatically — use Copy to Clipboard instead.'));
+}
+
 function printScript() {
   const d      = getDetails();
   const script = document.getElementById('scriptOutput').textContent;
