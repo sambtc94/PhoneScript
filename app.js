@@ -276,7 +276,7 @@ function printScript() {
       <span>Est. time: ${time}</span>
     </div>
     <pre>${escHtml(script)}</pre>
-    <footer>Callaghan College · Wallsend Campus · PhoneScript · For staff use only · Generated entirely in-browser — no data transmitted</footer>
+    <footer>Callaghan College · PhoneScript · For staff use only · Generated entirely in-browser — no data transmitted</footer>
     <script>window.onload = () => window.print();<\/script>
   </body></html>`);
   win.document.close();
