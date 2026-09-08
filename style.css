@@ -134,7 +134,7 @@ header { position: relative; }
 /* â”€â”€ Call-type toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .type-toggle {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   border-radius: var(--radius);
   overflow: hidden;
   border: 2px solid var(--border);
@@ -158,6 +158,7 @@ header { position: relative; }
 .type-btn .icon { font-size: 1.4rem; }
 .type-btn.active-pos { background: var(--pos); color: #fff; }
 .type-btn.active-neg { background: var(--neg); color: #fff; }
+.type-btn.active-assessment { background: var(--secondary); color: #fff; }
 
 /* â”€â”€ Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .card {
@@ -274,6 +275,7 @@ header { position: relative; }
 .btn-primary { background: var(--secondary); color: #fff; }
 .btn-pos     { background: var(--pos); color: #fff; }
 .btn-neg     { background: var(--neg); color: #fff; }
+.btn-assessment { background: var(--secondary); color: #fff; }
 .btn-outline {
   background: transparent;
   border: 2px solid var(--border);
@@ -318,6 +320,7 @@ header { position: relative; }
 }
 .script-output.pos-tinted { border-color: var(--pos-md); background: var(--pos-lt); }
 .script-output.neg-tinted { border-color: var(--red-40); background: var(--red-20); }
+.script-output.assessment-tinted { border-color: var(--secondary); background: var(--secondary-20); }
 
 .script-actions { display: flex; gap: .6rem; margin-top: .75rem; flex-wrap: wrap; }
 
@@ -355,6 +358,11 @@ header { position: relative; }
 }
 .response-card.pos-card summary { background: var(--pos-lt); color: var(--pos); }
 .response-card.neg-card summary { background: var(--red-20); color: var(--red); }
+.response-card.assessment-card summary { background: var(--secondary-20); color: var(--primary); }
+
+@media (max-width: 700px) {
+  .type-toggle { grid-template-columns: 1fr; }
+}
 
 /* â”€â”€ Smart badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .smart-badge {
@@ -497,6 +505,12 @@ a.btn {
   gap: .4rem;
   margin-bottom: 1.1rem;
   font-size: .88rem;
+}
+.reminder-card > .btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: .5rem;
+  text-align: center;
 }
 .reminder-list li {
   position: relative;

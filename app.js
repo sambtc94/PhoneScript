@@ -44,17 +44,22 @@ function buildChips(containerId, items) {
 function setMode(m) {
   mode = m;
   const isPos = m === 'positive';
+  const isAssessment = m === 'assessment';
   document.getElementById('btn-pos').className = 'type-btn' + (isPos  ? ' active-pos' : '');
   document.getElementById('btn-neg').className = 'type-btn' + (!isPos ? ' active-neg' : '');
+  document.getElementById('btn-assessment').className = 'type-btn' + (isAssessment ? ' active-assessment' : '');
   document.getElementById('pointsTitle').textContent =
-    isPos ? '✅ Points to Cover' : '⚠️ Concerns to Address';
+    isPos ? '✅ Points to Cover' : (isAssessment ? '📝 Assessment Points to Discuss' : '⚠️ Concerns to Address');
   document.getElementById('pointsHint').textContent =
     isPos
       ? 'Add the key positives you want to share — the script engine will weave them into a warm, encouraging call.'
-      : 'Add the concerns or issues to address — the script engine will craft a professional, constructive call.';
-  document.getElementById('generateBtn').className = 'btn ' + (isPos ? 'btn-pos' : 'btn-neg');
+      : isAssessment
+        ? 'Add the missing work, N-Award risk or next-step information you want to explain clearly and supportively.'
+        : 'Add the concerns or issues to address — the script engine will craft a professional, constructive call.';
+  document.getElementById('generateBtn').className = 'btn ' + (isPos ? 'btn-pos' : (isAssessment ? 'btn-assessment' : 'btn-neg'));
   document.getElementById('quickPos').style.display = isPos  ? '' : 'none';
-  document.getElementById('quickNeg').style.display = !isPos ? '' : 'none';
+  document.getElementById('quickNeg').style.display = !isPos && !isAssessment ? '' : 'none';
+  document.getElementById('quickAssessment').style.display = isAssessment ? '' : 'none';
   document.getElementById('scriptCard').style.display    = 'none';
   document.getElementById('responsesCard').style.display = 'none';
   // Clear points when switching to avoid accidental mixing
@@ -168,7 +173,7 @@ function showScript(text) {
   const meta = document.getElementById('scriptMeta');
 
   out.textContent = text;
-  out.className   = 'script-output ' + (mode === 'positive' ? 'pos-tinted' : 'neg-tinted');
+  out.className   = 'script-output ' + (mode === 'positive' ? 'pos-tinted' : (mode === 'assessment' ? 'assessment-tinted' : 'neg-tinted'));
 
   // Word count & estimated reading time (avg speaking pace ~130 wpm for careful phone calls)
   const words    = text.trim().split(/\s+/).length;
@@ -196,7 +201,9 @@ function buildEduChatPrompt() {
   const script = document.getElementById('scriptOutput').textContent;
   const type   = mode === 'positive'
     ? 'a positive / good-news call'
-    : 'a concern / follow-up call';
+    : mode === 'assessment'
+      ? 'an assessment follow-up call about missing work or N-Award requirements'
+      : 'a concern / follow-up call';
 
   return [
     `You are helping a teacher at a NSW public high school prepare for ${type} home to a parent/carer.`,
@@ -206,7 +213,7 @@ function buildEduChatPrompt() {
     `- Student: ${d.student}`,
     `- Parent/Carer: ${d.parent}`,
     `- Class/Subject: ${d.subject}`,
-    `- Call type: ${mode === 'positive' ? 'Positive' : 'Concern / follow-up'}`,
+    `- Call type: ${mode === 'positive' ? 'Positive' : (mode === 'assessment' ? 'Assessment / N-Award follow-up' : 'Concern / follow-up')}`,
     '',
     'KEY POINTS THE TEACHER WANTS TO COVER',
     ...points.map(p => `- ${p}`),
@@ -247,7 +254,7 @@ function openEduChat() {
 function printScript() {
   const d      = getDetails();
   const script = document.getElementById('scriptOutput').textContent;
-  const type   = mode === 'positive' ? 'Positive Call' : 'Concern / Follow-up Call';
+  const type   = mode === 'positive' ? 'Positive Call' : (mode === 'assessment' ? 'Assessment / N-Award Call' : 'Concern / Follow-up Call');
   const words  = script.trim().split(/\s+/).length;
   const mins   = Math.floor(words / 130);
   const secs   = Math.round((words % 130) / 130 * 60);
@@ -296,8 +303,8 @@ function regenerate() {
 function showResponses(m) {
   const grid = document.getElementById('responsesGrid');
   const card = document.getElementById('responsesCard');
-  const list  = m === 'positive' ? RESPONSES_POS : RESPONSES_NEG;
-  const cls   = m === 'positive' ? 'pos-card'    : 'neg-card';
+  const list  = m === 'positive' ? RESPONSES_POS : (m === 'assessment' ? RESPONSES_ASSESSMENT : RESPONSES_NEG);
+  const cls   = m === 'positive' ? 'pos-card'    : (m === 'assessment' ? 'assessment-card' : 'neg-card');
 
   grid.innerHTML = '';
   list.forEach(item => {
@@ -324,4 +331,5 @@ function showToast(msg, style) {
 /* ── Initialise ─────────────────────────────────────────────── */
 buildChips('quickPosChips', QUICK_POS);
 buildChips('quickNegChips', QUICK_NEG);
+buildChips('quickAssessmentChips', QUICK_ASSESSMENT);
 renderPoints();

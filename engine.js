@@ -277,6 +277,37 @@ function buildNegativeScript(d, pts) {
   return parts.join('\n\n');
 }
 
+function buildAssessmentScript(d, pts) {
+  const pointsText = pts.map((point, index) => {
+    const sentence = assessmentPointToSentence(point, d, index === 0);
+    return `${index === 0 ? 'The main thing I wanted to discuss is that' : 'I also wanted to mention that'} ${sentence}.`;
+  }).join(' ');
+
+  return [
+    `Hello, is this ${d.parent}?\n\nHi ${d.parent}, this is ${d.teacher} calling from school. I teach ${d.student} in ${d.subject}. Is now an okay time for a quick conversation?`,
+    pick('assessment_purpose', [
+      `I'm calling to talk through ${d.student}'s assessment requirements and make sure we have a clear plan for what needs to happen next.`,
+      `I wanted to contact you about some assessment work for ${d.student}, including what is currently outstanding and how we can support them to address it.`,
+      `I'm getting in touch early so we can work together around ${d.student}'s assessment progress and avoid the situation becoming more difficult.`
+    ]),
+    pointsText,
+    `I want to be clear that this conversation is about the outstanding requirements, not about labelling ${d.student}. The important thing is that we understand what is needed and help them take the next step.`,
+    `I'd really value your perspective. Has ${d.student} spoken with you about the assessment, the N-Award risk or anything that has made completing the work difficult?\n\n[Pause and listen]`,
+    `From here, I'll confirm the current requirements and speak with ${d.student} about the next action. Could you please encourage them to check in with the relevant teacher and bring any questions to us?`,
+    `Thank you for your time, ${d.parent}. I appreciate us working together to support ${d.student}. I'll follow up once the next steps are clear. Take care.`
+  ].join('\n\n');
+}
+
+function assessmentPointToSentence(point, d, isFirstMention) {
+  const p = point.trim();
+  if (/^at risk of\s+/i.test(p)) return `${d.student} may be ${lcFirst(p)}`;
+  if (/^missing\s+/i.test(p)) return `${d.student} is ${lcFirst(p)}`;
+  if (/^needs?\s+/i.test(p)) return `${d.student} ${lcFirst(p)}`;
+  if (/^has not\s+/i.test(p)) return `${d.student} ${lcFirst(p)}`;
+  if (/^(the )?assessment is\s+/i.test(p)) return `${d.student}'s ${lcFirst(p.replace(/^the /i, ''))}`;
+  return pointToSentence(p, false, d, isFirstMention);
+}
+
 /*
   Concern prose builder — turns 1-N concerns into well-structured paragraphs.
   Strategy:
@@ -341,7 +372,7 @@ function buildConcernsProse(d, pts) {
    PUBLIC API
 ════════════════════════════════════════════════════════ */
 function generateScriptText(mode, d, pts) {
-  return mode === 'positive'
-    ? buildPositiveScript(d, pts)
-    : buildNegativeScript(d, pts);
+  if (mode === 'positive') return buildPositiveScript(d, pts);
+  if (mode === 'assessment') return buildAssessmentScript(d, pts);
+  return buildNegativeScript(d, pts);
 }

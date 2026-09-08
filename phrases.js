@@ -29,6 +29,17 @@ const QUICK_NEG = [
   'Struggling with content',
 ];
 
+const QUICK_ASSESSMENT = [
+  'Missing assessment tasks',
+  'At risk of receiving an N-Award',
+  'Assessment is overdue',
+  'Has not submitted required work',
+  'Needs to speak with the class teacher',
+  'Needs a plan to catch up',
+  'Has not responded to reminders',
+  'Family may need support understanding requirements',
+];
+
 /* ── Keyword → category map (for dominant-theme detection) ──── */
 const KEYWORD_MAP = {
   behaviour  : /\b(behav|disrupt|class|talk|noise|shout|rude|attitude|respect|language|phone|device|equipment|throw|fight|aggress|bully|intimidat)/i,
@@ -299,5 +310,32 @@ const RESPONSES_NEG = [
   {
     q: '"[Student] says they find the work too hard / too easy."',
     a: `That's really valuable to hear — thank you. If the work isn't at the right level, that can definitely affect engagement. Let me review what I've been setting and we can discuss how to better match it to [student]'s needs.`,
+  },
+];
+
+const RESPONSES_ASSESSMENT = [
+  {
+    q: '"Why is this the first I have heard about it?"',
+    a: `I understand why you would want to know sooner. I am sharing the current information so we can address it now, and I will confirm the next steps and follow-up arrangements with you.`,
+  },
+  {
+    q: '"What exactly is an N-Award?"',
+    a: `An N-Award indicates that the requirements for a course or assessment have not yet been met. It is not a judgement about [student], and there are usually steps we can discuss to give them an opportunity to address the outstanding requirements.` ,
+  },
+  {
+    q: '"Can [student] still submit the assessment?"',
+    a: `I can explain what is currently outstanding and check the relevant deadline or school process. I do not want to promise an arrangement before confirming it, but I will make sure [student] knows the next step.` ,
+  },
+  {
+    q: '"[Student] says the work was completed."',
+    a: `Thank you for letting me know. I will check the submission records and speak with [student] so we can work out whether the task was submitted, received or still needs to be completed.` ,
+  },
+  {
+    q: '"How can we help at home?"',
+    a: `The most helpful things are to ask [student] to show you the task, check what is outstanding and encourage them to speak with the teacher. I can also clarify the next school-based step.` ,
+  },
+  {
+    q: '"Does this mean [student] will fail?"',
+    a: `It means there is an outstanding requirement we need to address. I cannot predict the final result from this conversation alone, but acting promptly gives [student] the best opportunity to complete the required work.` ,
   },
 ];

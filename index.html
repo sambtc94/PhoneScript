@@ -33,6 +33,9 @@
     <button class="type-btn" id="btn-neg" onclick="setMode('negative')">
       <span class="icon">⚠️</span> Concern / Follow-up Call
     </button>
+    <button class="type-btn" id="btn-assessment" onclick="setMode('assessment')">
+      <span class="icon">📝</span> Assessment / N-Award Call
+    </button>
   </div>
 
   <!-- ── Privacy notice ── -->
@@ -88,6 +91,11 @@
       <div style="display:flex;flex-wrap:wrap;gap:.4rem;" id="quickNegChips"></div>
     </div>
 
+    <div id="quickAssessment" style="display:none;margin-top:.9rem;">
+      <div class="section-label">Quick suggestions</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem;" id="quickAssessmentChips"></div>
+    </div>
+
     <div class="generate-bar">
       <button class="btn btn-pos" id="generateBtn" onclick="generateScript()">
         ✨ Generate Script
@@ -107,9 +115,6 @@
       <button class="btn btn-outline" onclick="printScript()">🖨️ Print</button>
       <button class="btn btn-outline" onclick="regenerate()">🔄 Regenerate</button>
       <button class="btn btn-outline" onclick="openEduChat()">🤖 Use EduChat to clean</button>
-      <a class="btn btn-outline"
-         href="https://callaghancollegewallsend.sentral.com.au/s-D4aM40/dashboard/"
-         target="_blank" rel="noopener noreferrer">🗂️ Log in Sentral</a>
     </div>
     <p class="action-caution">
       🤖 <strong>Use EduChat to clean:</strong> this copies a ready-made prompt and opens NSWEduChat
@@ -147,7 +152,7 @@
     <a class="btn btn-primary"
        href="https://callaghancollegewallsend.sentral.com.au/s-D4aM40/dashboard/"
        target="_blank" rel="noopener noreferrer">
-      Callaghan College Wallsend Campus — Dashboard ↗
+      Callaghan College — Dashboard ↗
     </a>
     <a class="btn btn-primary"
        href="https://callaghancollegejesmond.sentral.com.au/s-9wZ9Nb/dashboard/"
