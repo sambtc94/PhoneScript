@@ -46,7 +46,7 @@ function setMode(m) {
   const isPos = m === 'positive';
   const isAssessment = m === 'assessment';
   document.getElementById('btn-pos').className = 'type-btn' + (isPos  ? ' active-pos' : '');
-  document.getElementById('btn-neg').className = 'type-btn' + (!isPos ? ' active-neg' : '');
+  document.getElementById('btn-neg').className = 'type-btn' + (!isPos && !isAssessment ? ' active-neg' : '');
   document.getElementById('btn-assessment').className = 'type-btn' + (isAssessment ? ' active-assessment' : '');
   document.getElementById('pointsTitle').textContent =
     isPos ? '✅ Points to Cover' : (isAssessment ? '📝 Assessment Points to Discuss' : '⚠️ Concerns to Address');
@@ -54,7 +54,7 @@ function setMode(m) {
     isPos
       ? 'Add the key positives you want to share — the script engine will weave them into a warm, encouraging call.'
       : isAssessment
-        ? 'Add the missing work, N-Award risk or next-step information you want to explain clearly and supportively.'
+        ? 'Add the missing work, N-Warning risk or next-step information you want to explain clearly and supportively.'
         : 'Add the concerns or issues to address — the script engine will craft a professional, constructive call.';
   document.getElementById('generateBtn').className = 'btn ' + (isPos ? 'btn-pos' : (isAssessment ? 'btn-assessment' : 'btn-neg'));
   document.getElementById('quickPos').style.display = isPos  ? '' : 'none';
@@ -202,7 +202,7 @@ function buildEduChatPrompt() {
   const type   = mode === 'positive'
     ? 'a positive / good-news call'
     : mode === 'assessment'
-      ? 'an assessment follow-up call about missing work or N-Award requirements'
+      ? 'an assessment follow-up call about missing work or N-Warning requirements'
       : 'a concern / follow-up call';
 
   return [
@@ -213,7 +213,7 @@ function buildEduChatPrompt() {
     `- Student: ${d.student}`,
     `- Parent/Carer: ${d.parent}`,
     `- Class/Subject: ${d.subject}`,
-    `- Call type: ${mode === 'positive' ? 'Positive' : (mode === 'assessment' ? 'Assessment / N-Award follow-up' : 'Concern / follow-up')}`,
+    `- Call type: ${mode === 'positive' ? 'Positive' : (mode === 'assessment' ? 'Assessment / N-Warning follow-up' : 'Concern / follow-up')}`,
     '',
     'KEY POINTS THE TEACHER WANTS TO COVER',
     ...points.map(p => `- ${p}`),
@@ -254,7 +254,7 @@ function openEduChat() {
 function printScript() {
   const d      = getDetails();
   const script = document.getElementById('scriptOutput').textContent;
-  const type   = mode === 'positive' ? 'Positive Call' : (mode === 'assessment' ? 'Assessment / N-Award Call' : 'Concern / Follow-up Call');
+  const type   = mode === 'positive' ? 'Positive Call' : (mode === 'assessment' ? 'Assessment / N-Warning Call' : 'Concern / Follow-up Call');
   const words  = script.trim().split(/\s+/).length;
   const mins   = Math.floor(words / 130);
   const secs   = Math.round((words % 130) / 130 * 60);

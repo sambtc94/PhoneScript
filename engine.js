@@ -292,7 +292,7 @@ function buildAssessmentScript(d, pts) {
     ]),
     pointsText,
     `I want to be clear that this conversation is about the outstanding requirements, not about labelling ${d.student}. The important thing is that we understand what is needed and help them take the next step.`,
-    `I'd really value your perspective. Has ${d.student} spoken with you about the assessment, the N-Award risk or anything that has made completing the work difficult?\n\n[Pause and listen]`,
+    `I'd really value your perspective. Has ${d.student} spoken with you about the assessment, the N-Warning risk or anything that has made completing the work difficult?\n\n[Pause and listen]`,
     `From here, I'll confirm the current requirements and speak with ${d.student} about the next action. Could you please encourage them to check in with the relevant teacher and bring any questions to us?`,
     `Thank you for your time, ${d.parent}. I appreciate us working together to support ${d.student}. I'll follow up once the next steps are clear. Take care.`
   ].join('\n\n');
